@@ -44,10 +44,10 @@ void criarJogador(ELEMENTO **iniLista,ELEMENTO **fimLista, JOGADOR aux_info){
     novo->anterior = NULL;
     novo->seguinte = NULL;
     if (*iniLista == NULL) {
-        *iniLista = novo;
         *fimLista = novo;
+        *iniLista = novo;
     } else {
-        novo->seguinte = *fimLista;
+        novo->seguinte = *iniLista;
         (*iniLista)->anterior = novo;
         *iniLista = novo;
     }
@@ -147,7 +147,6 @@ void SavePlayersFile(ELEMENTO *iniLista){
         return ;
     }
 
-
     for(aux=iniLista;aux!=NULL;aux=aux->seguinte){
         fwrite(&(aux->info), sizeof(JOGADOR),1,fin);
     }
@@ -174,7 +173,6 @@ void readPlayers(ELEMENTO **iniList, ELEMENTO **fimList){
         fread(aux, sizeof(QUESTIONS), 1, foq);
         if (aux==NULL) break;
         criarJogador(iniList, fimList, *aux);
-
         if(feof(foq)){
             break;
         }

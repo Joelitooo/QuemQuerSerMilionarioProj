@@ -161,7 +161,7 @@ ELEMENTOQ *ReadListIn(ELEMENTOQ *iniList, ELEMENTOQ *fimList){
 
 }
 
-void testvaipalista(ELEMENTOQ **iniList, ELEMENTOQ **fimList){
+void ReadQForList(ELEMENTOQ **iniList, ELEMENTOQ **fimList){
 
     FILE *foq=NULL;
     QUESTIONS *aux=NULL;

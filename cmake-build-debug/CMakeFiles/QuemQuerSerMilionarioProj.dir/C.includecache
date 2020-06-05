@@ -26,6 +26,12 @@ time.h
 unistd.h
 -
 
+/cygdrive/c/Users/Utilizador/CLionProjectsProgamacaoI/github/ListaPlayers.c
+limits.h
+-
+FuncoesJogo.h
+/cygdrive/c/Users/Utilizador/CLionProjectsProgamacaoI/github/FuncoesJogo.h
+
 /cygdrive/c/Users/Utilizador/CLionProjectsProgamacaoI/github/conio.h
 stdio.h
 -

@@ -60,7 +60,7 @@ void MakeQuestion(ELEMENTOQ **iniList, ELEMENTOQ **endList, QUESTIONS aux_info);
 void SavePlayersFile(ELEMENTO *iniLista) ;
 int removePerson(ELEMENTO **iniListaPerguntaEscolhida, ELEMENTO **fimListaPerguntaEscolhida, char nome[]);
 void SaveQuestions(ELEMENTOQ *inilist);
-void testvaipalista(ELEMENTOQ **iniList, ELEMENTOQ **endList);
+void ReadQForList(ELEMENTOQ **iniList, ELEMENTOQ **endList);
 void readPlayers(ELEMENTO **iniList, ELEMENTO **fimList);
 
 int lerRegras();

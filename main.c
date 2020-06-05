@@ -12,8 +12,7 @@ int main() {
     ELEMENTOQ *iniList=NULL, *fimList=NULL;
     JOGADOR info_aux;
     QUESTIONS infoq_aux;
-    //testvaipalista(&iniList, &fimList);
-
+    ReadQForList(&iniList, &fimList);
     readPlayers(&iniLista, &fimLista);
     char Passwd[100] = "09292147asd";
     char CorrectPasswd[100];
