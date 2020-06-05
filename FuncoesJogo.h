@@ -15,10 +15,10 @@
 #include <unistd.h>
 
 typedef struct user{
+
     char nome[100];
     int idade;
-    char localidade [100];
-    int anodeescolaridade;
+
 }JOGADOR;
 
 typedef struct question{
@@ -55,16 +55,20 @@ JOGADOR dados();
 QUESTIONS dadosQ();
 void criarJogador(ELEMENTO **iniLista, ELEMENTO **fimLista, JOGADOR info_aux);
 void ReadPlayers(ELEMENTO **iniLista, ELEMENTO **fimLista);
-void MakeQuestion(ELEMENTOQ **iniListaUser,ELEMENTOQ **fimListaUser, QUESTIONS aux_info);
+void MakeQuestion(ELEMENTOQ **iniList, ELEMENTOQ **endList, QUESTIONS aux_info);
 void SavePlayersFile(ELEMENTO *iniLista, int totregistos);
 int removePerson(ELEMENTO **iniListaPerguntaEscolhida, ELEMENTO **fimListaPerguntaEscolhida, char nome[]);
 void SaveQuestions(ELEMENTOQ *inilist);
-void ReadQuestions(ELEMENTOQ **iniList, ELEMENTOQ **fimList);
+
 int lerRegras();
 void printQuestion(ELEMENTOQ *iniList);
 void LimpP(ELEMENTO **inilista, ELEMENTO **fimlista);
 void LimpQ(ELEMENTOQ **inilista, ELEMENTOQ **fimlista);
 void ListPlayers(ELEMENTO *iniList);
+int getSizeListQ(ELEMENTOQ *iniList);
+void showSizeQ(ELEMENTOQ *iniList);
+ELEMENTOQ *ReadListIn(ELEMENTOQ *iniList, ELEMENTOQ *fimList);
+
 
 ELEMENTOQ *ObterPergunta(ELEMENTOQ *iniListaQ);
 void InitGame(ELEMENTO *iniLista, ELEMENTOQ *iniListaQ);

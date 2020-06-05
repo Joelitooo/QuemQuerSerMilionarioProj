@@ -28,73 +28,112 @@ JOGADOR dados(){
     scanf(" %100[^\n]s", aux.nome);
     printf("\nSua idade por favor\nIdade:");
     scanf("%i", &aux.idade);
-    printf("\nIntroduza a sua localidade\nLocalidade:");
-    scanf(" %100[^\n]s", aux.localidade);
-    printf("\nIntroduza o seu ano de escolaridade(nº)\nAno:");
-    scanf("%i", &aux.anodeescolaridade);
     return aux;
 
 }
-void criarJogador(ELEMENTO **iniListaUser,ELEMENTO **fimListaUser, JOGADOR aux_info){
-    ELEMENTO *novo=NULL;
-    novo=(ELEMENTO *)calloc(1,sizeof(ELEMENTO));
+void criarJogador(ELEMENTO **iniLista,ELEMENTO **fimLista, JOGADOR aux_info){
+    ELEMENTO *novo = NULL;
+    novo = (ELEMENTO *) calloc(1, sizeof(ELEMENTO));
 
-    if(novo==NULL){
+    if (novo == NULL) {
         printf("Erro ao alocar memória\n");
         return ;
     }
-    novo->info=aux_info;
-    novo->seguinte=NULL;
-    novo->anterior=NULL;
-    if(*iniListaUser==NULL){
-        *fimListaUser=novo;
-        *iniListaUser=novo;
+    novo->info = aux_info;
+    novo->anterior = NULL;
+    novo->seguinte = NULL;
+    if (*iniLista == NULL) {
+        *iniLista = novo;
+        *fimLista = novo;
+    } else {
+        novo->seguinte = *fimLista;
+        (*iniLista)->anterior = novo;
+        *iniLista = novo;
     }
-    else{
-        novo->seguinte=*fimListaUser;
-        (*iniListaUser)->anterior=novo;
-        *iniListaUser=novo;
-    }
-    //(*totregistos)+=1;
 
+}
+
+ELEMENTO *ReadNextFromFile(ELEMENTO *iniLista, FILE *foq){
+
+        if(iniLista == NULL){
+            iniLista = malloc(sizeof(ELEMENTO));
+            fread(iniLista, sizeof(ELEMENTO),1, foq);
+            iniLista->seguinte=NULL;
+            iniLista->anterior=NULL;
+
+        } else{
+            ELEMENTO  *indexPLayer = iniLista;
+            ELEMENTO *newPlayer = malloc(sizeof(ELEMENTO));
+            while (indexPLayer->seguinte != NULL){
+                indexPLayer = indexPLayer->seguinte;
+            }
+            fread(newPlayer, sizeof(ELEMENTO),1,foq);
+            indexPLayer->seguinte=newPlayer;
+            newPlayer->seguinte=NULL;
+            newPlayer->anterior=indexPLayer;
+
+        }
+        return iniLista;
+    }
+
+
+ELEMENTO *ReadListIn(ELEMENTO *iniLista, ELEMENTO *fimLista) {
+
+    FILE *foq;
+    foq=fopen("Jogadores.dat","rb");
+
+    if (foq!=NULL){
+
+        //LimpQ(iniList, fimList);
+        iniLista=NULL;
+        fseek(foq, 0 ,SEEK_END);
+        long filesize = ftell(foq);
+        rewind(foq);
+
+        int EntriesNum = (int)(filesize/ (sizeof(ELEMENTO)));
+        printf("\nNumber of entries: %d\n", EntriesNum);
+
+        int loop = 0;
+        for (loop=0; loop <EntriesNum; loop++){
+            fseek(foq, (sizeof(ELEMENTO) *loop), SEEK_SET);
+            iniLista = ReadNextFromFile(iniLista, foq);
+
+        }
+
+    } else{
+        printf("\nERRORRRRR");
+    }
 
 }
 
 
-void ReadPlayers(ELEMENTO **iniLista, ELEMENTO **fimLista){
+void ListPlayers(ELEMENTO *iniLista){
 
-    FILE *fo=NULL;
-    //ELEMENTO *novo=NULL;
-    fo=fopen("jogadoresResgitados.dat","rb");
-    if(fo==NULL) {
-        fo = fopen("jogadoresResgitados.dat", "wb");
-        fclose(fo);
-        fo = fopen("jogadoresResgitados.dat", "rb");
+    ELEMENTO *aux= iniLista;
+
+    int count = 0;
+
+    ELEMENTO *ahead = NULL;
+    ELEMENTO *behind = NULL;
+
+    while(aux != NULL) {
+        count++;
+
+        ahead = aux->seguinte;
+        behind = aux->anterior;
+
+        printf("\nName: %s \nAge: %d\n",
+               aux->info.nome,
+               aux->info.idade,
+
+               (ahead == NULL) ? "None" : ahead->info.nome,
+               (behind == NULL) ? "None" : behind->info.nome);
+
+        aux = aux->seguinte;
+        ahead = NULL;
+        behind = NULL;
     }
-    JOGADOR aux;
-
-    while (1){
-        fread(&aux, sizeof(JOGADOR), 1, fo);
-        if(aux.nome == NULL || aux.nome == ' ') {
-            break;
-        }
-        //printf("Nome: %s \nIdade: %i \nLocalidade: %s \nAno de escolaridade: %i\n", aux.nome, aux.idade, aux.localidade,aux.anodeescolaridade);
-        criarJogador(iniLista, fimLista, aux);
-        if(feof(fo)){
-            break;
-        }
-
-    }
-
-    fclose(fo);
-
-}
-
-void ListPlayers(ELEMENTO *iniList){
-    ELEMENTO *aux=NULL;
-    for(aux=iniList;aux!=NULL;aux=aux->seguinte){
-        printf("Nome: %s \nIdade: %i \nLocalidade: %s \nAno de escolaridade: %i\n", aux->info.nome, aux->info.idade, aux->info.localidade,aux->info.anodeescolaridade);
-        }
+    printf("Total Questions:%d\n",count);
 }
 
 void SavePlayersFile(ELEMENTO *iniLista, int totregistos){
@@ -151,3 +190,24 @@ int removePerson(ELEMENTO **iniListaPerguntaEscolhida, ELEMENTO **fimListaPergun
     free(aux);
     return 0;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

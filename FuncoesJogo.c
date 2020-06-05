@@ -39,6 +39,7 @@ int AdminMenu(){
     printf("\n3-Adicionar uma pergunta");
     printf("\n4-Reset no historico");
     printf("\n5-Remover Jogador");
+    printf("\n6-Ver tamanho da Lista");
     printf("\n0 - SAIR");
     printf("\n--------------------------------------------\n");
     scanf("%i", &opc3);
