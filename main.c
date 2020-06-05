@@ -98,6 +98,7 @@ int main() {
                             break;
                         case 5:
                             printf("\nListagem de todos os jogadores registados\n");
+                            ReadListInP(iniLista,fimLista);
                             ListPlayers(iniLista);
                             break;
                         case 0:

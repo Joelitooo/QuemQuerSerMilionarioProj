@@ -1,3 +1,4 @@
+#include <limits.h>
 //
 // Created by Joel on 04/06/2020.
 //
@@ -77,7 +78,7 @@ ELEMENTO *ReadNextFromFile(ELEMENTO *iniLista, FILE *foq){
     }
 
 
-ELEMENTO *ReadListIn(ELEMENTO *iniLista, ELEMENTO *fimLista) {
+/*ELEMENTO *ReadListIn(ELEMENTO *iniLista, ELEMENTO *fimLista) {
 
     FILE *foq;
     foq=fopen("Jogadores.dat","rb");
@@ -105,7 +106,7 @@ ELEMENTO *ReadListIn(ELEMENTO *iniLista, ELEMENTO *fimLista) {
     }
 
 }
-
+*/
 
 void ListPlayers(ELEMENTO *iniLista){
 

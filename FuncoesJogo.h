@@ -1,3 +1,4 @@
+#include <limits.h>
 //
 // Created by Joel on 02/05/2020.
 //
@@ -68,9 +69,8 @@ void ListPlayers(ELEMENTO *iniList);
 int getSizeListQ(ELEMENTOQ *iniList);
 void showSizeQ(ELEMENTOQ *iniList);
 ELEMENTOQ *ReadListIn(ELEMENTOQ *iniList, ELEMENTOQ *fimList);
-
-
 ELEMENTOQ *ObterPergunta(ELEMENTOQ *iniListaQ);
+ELEMENTO  *ReadListInP(ELEMENTO *iniLista, ELEMENTO *fimLista);
 void InitGame(ELEMENTO *iniLista, ELEMENTOQ *iniListaQ);
 GAMESTATUS FazerPergunta(ELEMENTOQ *pergunta);
 
