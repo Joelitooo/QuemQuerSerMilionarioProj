@@ -54,10 +54,11 @@ void MakeQuestion(ELEMENTOQ **iniList, ELEMENTOQ **endList, QUESTIONS aux_info) 
     novo->anterior = NULL;
     novo->seguinte = NULL;
     if (*iniList == NULL) {
-        *iniList = novo;
         *endList = novo;
-    } else {
-        novo->seguinte = *endList;
+        *iniList = novo;
+    }
+    else {
+        novo->seguinte = *iniList;
         (*iniList)->anterior = novo;
         *iniList = novo;
     }
@@ -85,7 +86,7 @@ void SaveQuestions(ELEMENTOQ *inilist){
 
             fwrite(sQuestion, sizeof(ELEMENTOQ),1, finq);
 
-            printf("\nwrinting %s to file\n", sQuestion->infoq.mainquestion);
+            printf("\nWrinting %s to file\n", sQuestion->infoq.mainquestion);
 
             sQuestion->seguinte = holdNext;
             sQuestion->anterior = holdPrevious;
@@ -158,6 +159,33 @@ ELEMENTOQ *ReadListIn(ELEMENTOQ *iniList, ELEMENTOQ *fimList){
         printf("\nERRORRRRR");
     }
 
+}
+
+void testvaipalista(ELEMENTOQ **iniList, ELEMENTOQ **fimList){
+
+    FILE *foq=NULL;
+    QUESTIONS *aux=NULL;
+    foq=fopen("Perguntas.dat","rb");
+
+    if(foq==NULL){
+        foq=fopen("Perguntas.dat","wb");
+        fclose(foq);
+        foq=fopen("Perguntas.dat","rb");
+    }
+
+
+    while (1){
+        fread(aux, sizeof(QUESTIONS), 1, foq);
+        if (aux==NULL) break;
+        MakeQuestion(iniList, fimList, *aux);
+
+        if(feof(foq)){
+            break;
+        }
+
+    }
+
+    fclose(foq);
 }
 
 

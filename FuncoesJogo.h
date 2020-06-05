@@ -55,11 +55,13 @@ int AdminMenu();
 JOGADOR dados();
 QUESTIONS dadosQ();
 void criarJogador(ELEMENTO **iniLista, ELEMENTO **fimLista, JOGADOR info_aux);
-void ReadPlayers(ELEMENTO **iniLista, ELEMENTO **fimLista);
+
 void MakeQuestion(ELEMENTOQ **iniList, ELEMENTOQ **endList, QUESTIONS aux_info);
-void SavePlayersFile(ELEMENTO *iniLista, int totregistos);
+void SavePlayersFile(ELEMENTO *iniLista) ;
 int removePerson(ELEMENTO **iniListaPerguntaEscolhida, ELEMENTO **fimListaPerguntaEscolhida, char nome[]);
 void SaveQuestions(ELEMENTOQ *inilist);
+void testvaipalista(ELEMENTOQ **iniList, ELEMENTOQ **endList);
+void readPlayers(ELEMENTO **iniList, ELEMENTO **fimList);
 
 int lerRegras();
 void printQuestion(ELEMENTOQ *iniList);

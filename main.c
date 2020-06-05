@@ -2,6 +2,7 @@
 #include "FuncoesJogo.h"
 
 int main() {
+    printf("\nMitico debug");
     int opc=0;
     int opc2=0;
 
@@ -10,11 +11,10 @@ int main() {
     ELEMENTO  *iniLista=NULL, *fimLista=NULL;
     ELEMENTOQ *iniList=NULL, *fimList=NULL;
     JOGADOR info_aux;
-    int totregistos=0;
-    FILE *fin=NULL;
-    ELEMENTO *aux=NULL;
     QUESTIONS infoq_aux;
-    ReadPlayers(&iniLista, &fimLista);
+    //testvaipalista(&iniList, &fimList);
+
+    readPlayers(&iniLista, &fimLista);
     char Passwd[100] = "09292147asd";
     char CorrectPasswd[100];
     int attempts=3;
@@ -53,8 +53,6 @@ int main() {
                                     printf("\nI am here");
                                     MakeQuestion(&iniList,&fimList, infoq_aux);
                                     printf("\ni am here");
-                                    SaveQuestions(iniList);
-                                    printf("\nI am here");
                                     break;
                                 case 4:
                                     printf("\nRemover historico");
@@ -108,7 +106,8 @@ int main() {
                 break;
             case 0: printf("\nVolte sempre\n");
                 printf("\n");
-                SavePlayersFile(iniLista, totregistos);
+                SavePlayersFile(iniLista);
+                SaveQuestions(iniList);
                 printf("\n");
                 LimpP(&iniLista, &fimLista);
                 LimpQ(&iniList, &fimList);

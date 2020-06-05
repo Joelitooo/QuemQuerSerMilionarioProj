@@ -54,7 +54,7 @@ void criarJogador(ELEMENTO **iniLista,ELEMENTO **fimLista, JOGADOR aux_info){
 
 }
 
-ELEMENTO *ReadNextFromFile(ELEMENTO *iniLista, FILE *foq){
+ELEMENTO *ReadNextFromFileP(ELEMENTO *iniLista, FILE *foq){
 
         if(iniLista == NULL){
             iniLista = malloc(sizeof(ELEMENTO));
@@ -78,7 +78,7 @@ ELEMENTO *ReadNextFromFile(ELEMENTO *iniLista, FILE *foq){
     }
 
 
-/*ELEMENTO *ReadListIn(ELEMENTO *iniLista, ELEMENTO *fimLista) {
+ELEMENTO *ReadListInP(ELEMENTO *iniLista, ELEMENTO *fimLista) {
 
     FILE *foq;
     foq=fopen("Jogadores.dat","rb");
@@ -97,7 +97,7 @@ ELEMENTO *ReadNextFromFile(ELEMENTO *iniLista, FILE *foq){
         int loop = 0;
         for (loop=0; loop <EntriesNum; loop++){
             fseek(foq, (sizeof(ELEMENTO) *loop), SEEK_SET);
-            iniLista = ReadNextFromFile(iniLista, foq);
+            iniLista = ReadNextFromFileP(iniLista, foq);
 
         }
 
@@ -106,7 +106,7 @@ ELEMENTO *ReadNextFromFile(ELEMENTO *iniLista, FILE *foq){
     }
 
 }
-*/
+
 
 void ListPlayers(ELEMENTO *iniLista){
 
@@ -134,10 +134,10 @@ void ListPlayers(ELEMENTO *iniLista){
         ahead = NULL;
         behind = NULL;
     }
-    printf("Total Questions:%d\n",count);
+    printf("Total Players:%d\n",count);
 }
 
-void SavePlayersFile(ELEMENTO *iniLista, int totregistos){
+void SavePlayersFile(ELEMENTO *iniLista){
     ELEMENTO *aux;
     FILE *fin=NULL;
     aux=iniLista;
@@ -156,6 +156,32 @@ void SavePlayersFile(ELEMENTO *iniLista, int totregistos){
 
     fclose(fin);
 
+}
+void readPlayers(ELEMENTO **iniList, ELEMENTO **fimList){
+
+    FILE *foq=NULL;
+    JOGADOR *aux=NULL;
+    foq=fopen("registedPlayers.dat","rb");
+
+    if(foq==NULL){
+        foq=fopen("registedPlayers.dat","wb");
+        fclose(foq);
+        foq=fopen("registedPlayers.dat","rb");
+    }
+
+
+    while (1){
+        fread(aux, sizeof(QUESTIONS), 1, foq);
+        if (aux==NULL) break;
+        criarJogador(iniList, fimList, *aux);
+
+        if(feof(foq)){
+            break;
+        }
+
+    }
+
+    fclose(foq);
 }
 
 int removePerson(ELEMENTO **iniListaPerguntaEscolhida, ELEMENTO **fimListaPerguntaEscolhida, char nome[]){
