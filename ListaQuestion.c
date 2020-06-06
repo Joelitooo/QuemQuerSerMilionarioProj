@@ -42,13 +42,13 @@ QUESTIONS dadosQ(){
 
 
 
-void MakeQuestion(ELEMENTOQ **iniList, ELEMENTOQ **endList, QUESTIONS aux_info) {
+int MakeQuestion(ELEMENTOQ **iniList, ELEMENTOQ **endList, QUESTIONS aux_info) {
     ELEMENTOQ *novo = NULL;
     novo = (ELEMENTOQ *) calloc(1, sizeof(ELEMENTOQ));
 
     if (novo == NULL) {
         printf("Erro ao alocar memória\n");
-        return ;
+        return -1;
     }
     novo->infoq = aux_info;
     novo->anterior = NULL;
@@ -62,15 +62,26 @@ void MakeQuestion(ELEMENTOQ **iniList, ELEMENTOQ **endList, QUESTIONS aux_info) 
         (*iniList)->anterior = novo;
         *iniList = novo;
     }
-
+    return 0;
 }
 
 void SaveQuestions(ELEMENTOQ *inilist){
 
     FILE *finq;
+    ELEMENTOQ *aux=NULL;
+
 
     finq=fopen("Perguntas.dat","wb");
     if (finq!=NULL){
+
+
+        for (aux=inilist; aux != NULL; aux=aux->seguinte){
+            fwrite(&(aux->infoq), sizeof(QUESTIONS),1 ,finq);
+        }
+        fclose(finq);
+
+
+        /*
         ELEMENTOQ *sQuestion = inilist;
         ELEMENTOQ *holdNext =NULL;
         ELEMENTOQ *holdPrevious =NULL;
@@ -98,13 +109,13 @@ void SaveQuestions(ELEMENTOQ *inilist){
 
         }
         fclose(finq);
-        finq=NULL;
+        finq=NULL;*/
     } else{
         printf("\nError opening the file!");
         return ;
     }
 
-    printf("File wrote with success\n");
+    printf("File for Questions wrote with success\n");
 
 
 }
@@ -148,50 +159,53 @@ ELEMENTOQ *ReadListIn(ELEMENTOQ *iniList, ELEMENTOQ *fimList){
         int EntriesNum = (int)(filesize/ (sizeof(ELEMENTOQ)));
         printf("\nNumber of entries: %d\n", EntriesNum);
 
-        int loop = 0;
-        for (loop=0; loop <EntriesNum; loop++){
+        for (int loop=0; loop <EntriesNum; loop++){
             fseek(foq, (sizeof(ELEMENTOQ) *loop), SEEK_SET);
             iniList = ReadNextFromFile(iniList, foq);
-
         }
 
     } else{
-        printf("\nERRORRRRR");
+        printf("\nERRORRRRR\n");
     }
 
 }
 
-void ReadQForList(ELEMENTOQ **iniList, ELEMENTOQ **fimList){
+void NotoworkingQuestions(ELEMENTOQ **iniList, ELEMENTOQ **endList){
 
-    FILE *foq=NULL;
-    QUESTIONS *aux=NULL;
-    foq=fopen("Perguntas.dat","rb");
+    FILE *fy;
+    QUESTIONS question;
+    fy=fopen("Perguntas.dat", "rb");
 
-    if(foq==NULL){
-        foq=fopen("Perguntas.dat","wb");
-        fclose(foq);
-        foq=fopen("Perguntas.dat","rb");
-    }
+    if(fy != NULL){
+        /*fy=fopen("Perguntas.dat", "wb");
+        fclose(fy);
+        fy=fopen("Perguntas.dat", "rb");*/
 
+        while (1){
+            fread(&question, sizeof(question), 1, fy);
+            //if (aux==NULL){ break;}
+            MakeQuestion(iniList, endList, question);
+            if(feof(fy)){
+                break;
+            }
 
-    while (1){
-        fread(aux, sizeof(QUESTIONS), 1, foq);
-        if (aux==NULL) break;
-        MakeQuestion(iniList, fimList, *aux);
-
-        if(feof(foq)){
-            break;
         }
 
+    } else{
+        printf("\nyou got gotted");
     }
 
-    fclose(foq);
+
+    fclose(fy);
+
 }
 
 
 void printQuestion(ELEMENTOQ *iniList){
 
 
+    ELEMENTOQ *aux=NULL;
+/*
     ELEMENTOQ *aux= iniList;
 
     int count = 0;
@@ -222,14 +236,14 @@ void printQuestion(ELEMENTOQ *iniList){
         behind = NULL;
     }
     printf("Total Questions:%d\n",count);
+*/
 
 
-
-    /*for(aux=iniList;aux!=NULL;aux=aux->seguinte){
+    for(aux=iniList;aux!=NULL;aux=aux->seguinte){
         printf("\nQuestion: %s \nAnswer options: %s\n%s\n%s\n%s\nCorrect Option:%s\nDificulty:%i\n", aux->infoq.mainquestion, aux->infoq.option1, aux->infoq.option2,aux->infoq.option3, aux->infoq.option4, aux->infoq.correctoption,aux->infoq.dificulty);
 
     }
-*/
+
 }
 
 

@@ -46,7 +46,7 @@ typedef struct elemq{
     struct elemq *anterior;
 }ELEMENTOQ;
 
-typedef enum gameStatus { ONGOING, ENDED }GAMESTATUS;
+typedef enum gameStatus { ONGOING, AJUDA1, AJUDA2, AJUDA3, AJUDA4, ENDED }GAMESTATUS;
 
 
 int MainMenu();
@@ -56,24 +56,24 @@ JOGADOR dados();
 QUESTIONS dadosQ();
 void criarJogador(ELEMENTO **iniLista, ELEMENTO **fimLista, JOGADOR info_aux);
 
-void MakeQuestion(ELEMENTOQ **iniList, ELEMENTOQ **endList, QUESTIONS aux_info);
+int MakeQuestion(ELEMENTOQ **iniList, ELEMENTOQ **endList, QUESTIONS aux_info);
 void SavePlayersFile(ELEMENTO *iniLista) ;
 int removePerson(ELEMENTO **iniListaPerguntaEscolhida, ELEMENTO **fimListaPerguntaEscolhida, char nome[]);
 void SaveQuestions(ELEMENTOQ *inilist);
-void ReadQForList(ELEMENTOQ **iniList, ELEMENTOQ **endList);
-void readPlayers(ELEMENTO **iniList, ELEMENTO **fimList);
+void NotoworkingQuestions(ELEMENTOQ **iniList, ELEMENTOQ **endList);
+int  NotworkingPlayers(ELEMENTO **iniList, ELEMENTO **fimList);
 
 int lerRegras();
 void printQuestion(ELEMENTOQ *iniList);
 void LimpP(ELEMENTO **inilista, ELEMENTO **fimlista);
 void LimpQ(ELEMENTOQ **inilista, ELEMENTOQ **fimlista);
-void ListPlayers(ELEMENTO *iniList);
+void ListPlayers(ELEMENTO *iniLista);
 int getSizeListQ(ELEMENTOQ *iniList);
 void showSizeQ(ELEMENTOQ *iniList);
 ELEMENTOQ *ReadListIn(ELEMENTOQ *iniList, ELEMENTOQ *fimList);
-ELEMENTOQ *ObterPergunta(ELEMENTOQ *iniListaQ);
+ELEMENTOQ *ObterPergunta(ELEMENTOQ *iniListaQ, int escala);
 ELEMENTO  *ReadListInP(ELEMENTO *iniLista, ELEMENTO *fimLista);
 void InitGame(ELEMENTO *iniLista, ELEMENTOQ *iniListaQ);
-GAMESTATUS FazerPergunta(ELEMENTOQ *pergunta);
+GAMESTATUS FazerPergunta(ELEMENTOQ *pergunta, int ajudas[4], int ajuda);
 
 #endif //QUEMQUERSERMILIONARIOPROJ_FUNCOESJOGO_H

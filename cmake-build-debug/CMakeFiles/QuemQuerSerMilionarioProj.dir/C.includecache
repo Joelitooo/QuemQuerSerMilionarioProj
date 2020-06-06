@@ -6,6 +6,10 @@
 
 #IncludeRegexTransform: 
 
+/cygdrive/c/Users/Utilizador/CLionProjectsProgamacaoI/github/FuncoesJogo.c
+FuncoesJogo.h
+/cygdrive/c/Users/Utilizador/CLionProjectsProgamacaoI/github/FuncoesJogo.h
+
 /cygdrive/c/Users/Utilizador/CLionProjectsProgamacaoI/github/FuncoesJogo.h
 limits.h
 -
@@ -26,17 +30,7 @@ time.h
 unistd.h
 -
 
-/cygdrive/c/Users/Utilizador/CLionProjectsProgamacaoI/github/ListaPlayers.c
-limits.h
--
-FuncoesJogo.h
-/cygdrive/c/Users/Utilizador/CLionProjectsProgamacaoI/github/FuncoesJogo.h
-
 /cygdrive/c/Users/Utilizador/CLionProjectsProgamacaoI/github/conio.h
 stdio.h
 -
-
-/cygdrive/c/Users/Utilizador/CLionProjectsProgamacaoI/github/main.c
-FuncoesJogo.h
-/cygdrive/c/Users/Utilizador/CLionProjectsProgamacaoI/github/FuncoesJogo.h
 

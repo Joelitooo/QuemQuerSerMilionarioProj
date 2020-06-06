@@ -109,7 +109,7 @@ ELEMENTO *LoginPlayer(ELEMENTO *iniLista) {
     return tempJogador;
 }
 
-ELEMENTOQ *ObterPergunta(ELEMENTOQ *iniListaQ) {
+ELEMENTOQ *ObterPergunta(ELEMENTOQ *iniListaQ, int escala) {
     int nPerguntas = 0, nPergunta;
     ELEMENTOQ *pergunta, *perguntaAux;
     perguntaAux = iniListaQ;
@@ -118,35 +118,57 @@ ELEMENTOQ *ObterPergunta(ELEMENTOQ *iniListaQ) {
         nPerguntas++;
         perguntaAux=perguntaAux->seguinte;
     }
-    srand(time(NULL)/3600);
-    nPergunta =(rand() % nPerguntas-1)+1;
-    pergunta = iniListaQ;
-    while(nPergunta>0) {
-        pergunta=pergunta->seguinte;
-        nPergunta--;
-    }
-
+    do {
+        nPergunta = (rand() % nPerguntas);
+        pergunta = iniListaQ;
+        while (nPergunta > 0) {
+            pergunta = pergunta->seguinte;
+            nPergunta--;
+        }
+    }while (pergunta->infoq.dificulty != escala+1);
     return pergunta;
 }
 
 void InitGame(ELEMENTO *iniLista, ELEMENTOQ *iniListaQ) {
     int score = 0, escala = 0, iEscala = 0;
+    char opCont[10];
+    int ajudas[4]={1,1,1,0};
     ELEMENTO *jogador = LoginPlayer(iniLista);
     if(jogador == NULL) {
-        printf("O jogador não existe.");
+        printf("Player does not exist.");
         return;
     }
     int escalaDinheiro[3][5] = {{ 25, 50, 125, 250, 500 }, {750, 1500, 2500, 5000, 10000}, {16000, 32000, 64000, 125000, 250000}};
-    printf("Bem vindo %s\n", jogador->info.nome);
+    printf("Welcome %s\n", jogador->info.nome);
     while(1) {
-        ELEMENTOQ *pergunta = ObterPergunta(iniListaQ);
+        ELEMENTOQ *pergunta = ObterPergunta(iniListaQ, escala);
         printf("Score: %i\tMoney: %i\n", score, escalaDinheiro[escala][iEscala]);
-        GAMESTATUS gameStatus = FazerPergunta(pergunta);
+        GAMESTATUS gameStatus = FazerPergunta(pergunta, ajudas, 0);
+        if(gameStatus == AJUDA1) {
+            gameStatus = FazerPergunta(pergunta, ajudas, 1);
+        } else if(gameStatus == AJUDA2) {
+            gameStatus = FazerPergunta(pergunta, ajudas, 2);
+        } else if(gameStatus == AJUDA3) {
+            gameStatus = FazerPergunta(pergunta, ajudas, 3);
+        } else if(gameStatus == AJUDA4) {
+            pergunta = ObterPergunta(iniListaQ, escala);
+            gameStatus = FazerPergunta(pergunta, ajudas, 0);
+        }
         if(gameStatus == ONGOING) {
             score+=pergunta->infoq.dificulty;
             if(++iEscala == 5) {
                 iEscala = 0;
                 escala++;
+                if (escala==3){
+                    printf("You won the max prize\n");
+                } else if(escala == 1) {
+                    ajudas[3] = 1;
+                }
+                printf("\nDo you wish to continue?\n(Y/N)\n");
+                scanf(" %100[^\n]s", opCont);
+                if (strcmp(opCont, "N")==0){
+                    break;
+                }
             }
         } else {
             break;
@@ -154,14 +176,191 @@ void InitGame(ELEMENTO *iniLista, ELEMENTOQ *iniListaQ) {
     }
 }
 
-GAMESTATUS FazerPergunta(ELEMENTOQ *pergunta) {
-    char opcao[100];
-    printf("Question: %s\nPossible Answers:\nA- %s\nB- %s\nC- %s\nD- %s\nAnswer:", pergunta->infoq.mainquestion, pergunta->infoq.option1, pergunta->infoq.option2, pergunta->infoq.option3, pergunta->infoq.option4);
-    scanf(" %100[^\n]s", opcao);
+GAMESTATUS FazerPergunta(ELEMENTOQ *pergunta, int ajudas[4], int ajuda) {
+    char opcao[100], opContH[10], opcaoAjudas[10], opContJ[10];
+    if(ajuda == 0) {
 
-    if(opcao == pergunta->infoq.correctoption) {
-        return ONGOING;
+        printf("Question: %s\nPossible Answers:\nA- %s\nB- %s\nC- %s\nD- %s\n",
+               pergunta->infoq.mainquestion,
+               pergunta->infoq.option1,
+               pergunta->infoq.option2,
+               pergunta->infoq.option3,
+               pergunta->infoq.option4);
+
+        printf("\nDo you need to use a HELP?\n(Y/N)\n");
+        scanf(" %100[^\n]s", opContH);
+        if (strcmp(opContH, "Y") == 0 && (ajudas[0] == 1 || ajudas[1] == 1 || ajudas[2] == 1 || ajudas[3] == 1)) {
+            printf("Avaliable Helps:\n");
+            if (ajudas[0] == 1) {
+                printf("1- 50/50\n");
+            }
+            if (ajudas[1] == 1) {
+                printf("2- Phone Call\n");
+            }
+            if (ajudas[2] == 1) {
+                printf("3- Audience's help\n");
+            }
+            if (ajudas[3] == 1) {
+                printf("4- Change question\n");
+            }
+
+            scanf(" %100[^\n]s", opcaoAjudas);
+
+            if (strcmp(opcaoAjudas, "1") == 0 && ajudas[0] == 1) {
+                ajudas[0] = 0;
+                return AJUDA1;
+            } else if (strcmp(opcaoAjudas, "2") == 0 && ajudas[1] == 1) {
+                ajudas[1] = 0;
+                return AJUDA2;
+            } else if (strcmp(opcaoAjudas, "3") == 0 && ajudas[2] == 1) {
+                ajudas[2] = 0;
+                return AJUDA3;
+            } else if (strcmp(opcaoAjudas, "4") == 0 && ajudas[3] == 1) {
+                ajudas[3] = 0;
+                return AJUDA4;
+            }
+
+        } else if (strcmp(opContH, "Y") == 0) {
+            printf("You have no more helps.");
+        } else {
+
+        }
     } else {
+        char perguntaOption1[1000], perguntaOption2[1000], respostaDoManel[1000], publico[1000];
+        int respostasPublico[4];
+        switch(ajuda) {
+            case 1:
+                if(rand()%2 == 0) {
+                    strcpy(perguntaOption1, pergunta->infoq.correctoption);
+                    do {
+                        switch(rand()%4) {
+                            case 0:
+                                strcpy(perguntaOption2, pergunta->infoq.option1);
+                                break;
+                            case 1:
+                                strcpy(perguntaOption2, pergunta->infoq.option2);
+                                break;
+                            case 2:
+                                strcpy(perguntaOption2, pergunta->infoq.option3);
+                                break;
+                            case 3:
+                                strcpy(perguntaOption2, pergunta->infoq.option4);
+                                break;
+                        }
+                    } while(strcmp(perguntaOption1, perguntaOption2) == 0);
+                } else {
+                    strcpy(perguntaOption2, pergunta->infoq.correctoption);
+                    do {
+                        switch(rand()%4) {
+                            case 0:
+                                strcpy(perguntaOption1, pergunta->infoq.option1);
+                                break;
+                            case 1:
+                                strcpy(perguntaOption1, pergunta->infoq.option2);
+                                break;
+                            case 2:
+                                strcpy(perguntaOption1, pergunta->infoq.option3);
+                                break;
+                            case 3:
+                                strcpy(perguntaOption1, pergunta->infoq.option4);
+                                break;
+                        }
+                    } while(strcmp(perguntaOption1, perguntaOption2) == 0);
+                }
+                printf("Question: %s\nPossible Answers:\nA- %s\nB- %s\n",
+                       pergunta->infoq.mainquestion,
+                       perguntaOption1,
+                       perguntaOption2);
+                break;
+            case 2:
+                if(rand()%10<7) {
+                    strcpy(respostaDoManel, pergunta->infoq.correctoption);
+                } else {
+                    do{
+                        switch(rand()%4) {
+                            case 0:
+                                strcpy(respostaDoManel, pergunta->infoq.option1);
+                                break;
+                            case 1:
+                                strcpy(respostaDoManel, pergunta->infoq.option2);
+                                break;
+                            case 2:
+                                strcpy(respostaDoManel, pergunta->infoq.option3);
+                                break;
+                            case 3:
+                                strcpy(respostaDoManel, pergunta->infoq.option4);
+                                break;
+                        }
+                    } while(strcmp(respostaDoManel, pergunta->infoq.correctoption) == 0);
+                }
+                printf("\nYou called Manel, he answered: %s\n", respostaDoManel);
+                break;
+            case 3:
+                for(int i = 0; i < 100; i++) {
+                    if(rand()%100 < 90) {
+                        strcpy(&publico[i], pergunta->infoq.correctoption);
+                    } else {
+                        do{
+                            switch(rand()%4) {
+                                case 0:
+                                    strcpy(&publico[i], pergunta->infoq.option1);
+                                    break;
+                                case 1:
+                                    strcpy(&publico[i], pergunta->infoq.option2);
+                                    break;
+                                case 2:
+                                    strcpy(&publico[i], pergunta->infoq.option3);
+                                    break;
+                                case 3:
+                                    strcpy(&publico[i], pergunta->infoq.option4);
+                                    break;
+                            }
+                        } while(strcmp(&publico[i], pergunta->infoq.correctoption) == 0);
+                    }
+                }
+
+                for(int i = 0;i < 100; i++) {
+                    if(strcmp(&publico[i], pergunta->infoq.option1) == 0) {
+                        respostasPublico[0]++;
+                    } else if(strcmp(&publico[i], pergunta->infoq.option2) == 0) {
+                        respostasPublico[1]++;
+                    } else if(strcmp(&publico[i], pergunta->infoq.option3) == 0) {
+                        respostasPublico[2]++;
+                    } else if(strcmp(&publico[i], pergunta->infoq.option4) == 0) {
+                        respostasPublico[3]++;
+                    }
+                }
+
+                printf("Audience answers:\nOption 1: %s: %i\nOption 2: %s: %i\nOption 3: %s: %i\nOption 4: %s: %i\n",
+                        pergunta->infoq.option1, respostasPublico[0],
+                        pergunta->infoq.option2, respostasPublico[1],
+                        pergunta->infoq.option3, respostasPublico[2],
+                        pergunta->infoq.option4, respostasPublico[3]);
+
+                break;
+        }
+    }
+
+    printf("\n\nAnswer:");
+    timer_t comeco= time(0);
+    scanf(" %100[^\n]s", opcao);
+    if (strcmp(opcao, (pergunta->infoq.correctoption)) == 0 ){
+
+        if (time(0)-comeco > 30){
+            printf("\nTime over\n");
+            return ENDED;
+        }
+        printf("Correct Answer!\n");
+        printf("\nDo you wish to continue playing?\n(Y/N)\n");
+        scanf(" %100[\n^]s", opContJ);
+        if (strcmp(opContJ, "N")==0){
+            return ENDED;
+        }
+        return ONGOING;
+
+    } else {
+        printf("Incorrect Answer! Get sad :(");
         return ENDED;
     }
+
 }

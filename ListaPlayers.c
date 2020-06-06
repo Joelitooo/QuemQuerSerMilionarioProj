@@ -22,7 +22,6 @@ void LimpP(ELEMENTO **inilista, ELEMENTO **fimlista){
 
 }
 
-
 JOGADOR dados(){
     JOGADOR aux;
     printf("\nIntroduza o seu primeiro e ultimo nome\nNome:");
@@ -81,7 +80,7 @@ ELEMENTO *ReadNextFromFileP(ELEMENTO *iniLista, FILE *foq){
 ELEMENTO *ReadListInP(ELEMENTO *iniLista, ELEMENTO *fimLista) {
 
     FILE *foq;
-    foq=fopen("Jogadores.dat","rb");
+    foq=fopen("registedPlayers.dat","rb");
 
     if (foq!=NULL){
 
@@ -138,10 +137,10 @@ void ListPlayers(ELEMENTO *iniLista){
 }
 
 void SavePlayersFile(ELEMENTO *iniLista){
-    ELEMENTO *aux;
+    ELEMENTO *aux=NULL;
     FILE *fin=NULL;
-    aux=iniLista;
-    fin=fopen("jogadoresResgitados.dat","wb");
+
+    fin=fopen("registedPlayers.dat","wb");
     if (fin==NULL){
         printf("\nError opening the file!");
         return ;
@@ -151,28 +150,25 @@ void SavePlayersFile(ELEMENTO *iniLista){
         fwrite(&(aux->info), sizeof(JOGADOR),1,fin);
     }
 
-    printf("Ficheiro criado com sucesso\n");
+    printf("\nFile for players wrote with success \n");
 
     fclose(fin);
 
 }
-void readPlayers(ELEMENTO **iniList, ELEMENTO **fimList){
+int NotworkingPlayers(ELEMENTO **iniList, ELEMENTO **fimList){
+
 
     FILE *foq=NULL;
-    JOGADOR *aux=NULL;
+    JOGADOR aux;
     foq=fopen("registedPlayers.dat","rb");
 
     if(foq==NULL){
-        foq=fopen("registedPlayers.dat","wb");
-        fclose(foq);
-        foq=fopen("registedPlayers.dat","rb");
+    return -1;
     }
 
-
     while (1){
-        fread(aux, sizeof(QUESTIONS), 1, foq);
-        if (aux==NULL) break;
-        criarJogador(iniList, fimList, *aux);
+        fread(&aux, sizeof(aux), 1, foq);
+        criarJogador(iniList, fimList, aux);
         if(feof(foq)){
             break;
         }

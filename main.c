@@ -2,25 +2,23 @@
 #include "FuncoesJogo.h"
 
 int main() {
-    printf("\nMitico debug");
-    int opc=0;
-    int opc2=0;
-
 
     setlocale(LC_ALL, "Portuguese");
     ELEMENTO  *iniLista=NULL, *fimLista=NULL;
     ELEMENTOQ *iniList=NULL, *fimList=NULL;
     JOGADOR info_aux;
     QUESTIONS infoq_aux;
-    ReadQForList(&iniList, &fimList);
-    readPlayers(&iniLista, &fimLista);
-    char Passwd[100] = "09292147asd";
+    NotworkingPlayers(&iniLista, &fimLista);
+    NotoworkingQuestions(&iniList, &fimList);
+    char Passwd[100] = "asd";
     char CorrectPasswd[100];
     int attempts=3;
+    int opc=0;
+    int opc2=0;
     int res=0;
     int opc3=0;
     char nameremove[100];
-
+    srand(time(NULL));
 
     do{
         opc=MainMenu();
@@ -40,7 +38,6 @@ int main() {
                             switch (opc3) {
                                 case 1:
                                     printf("\nListar todas as perguntas e resposta");
-                                    ReadListIn(iniList,fimList);
                                     printQuestion(iniList);
                                     break;
                                 case 2:
@@ -49,9 +46,7 @@ int main() {
                                 case 3:
                                     printf("\nAdicionar pergunta");
                                     infoq_aux=dadosQ();
-                                    printf("\nI am here");
                                     MakeQuestion(&iniList,&fimList, infoq_aux);
-                                    printf("\ni am here");
                                     break;
                                 case 4:
                                     printf("\nRemover historico");
@@ -97,6 +92,7 @@ int main() {
                             printf("\nListagem de todos os jogadores registados\n");
                             ReadListInP(iniLista,fimLista);
                             ListPlayers(iniLista);
+                            printf("\nI am here");
                             break;
                         case 0:
                             break;
