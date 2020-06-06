@@ -1,0 +1,17 @@
+Regras do jogo:
+Objetivo: acertar 15 perguntas de escolha múltipla sucessivamente e ganhar o prémio final
+Cada pergunta tem um valor associado, que varia entre 25€ e 250.000€
+Existem 3 patamares, cada patamar com 5 perguntas
+	1patamar.	  25€, 50€, 125€, 250€, 500€;
+	2patamar.	  750€, 1.500€, 2.500€, 5.000€, 10.000€;
+	3patamar.	  16.000€, 32.000€, 64.000€, 125.000€, 250.000€.
+Existe ainda 2 patamares de segurança, 5 e 10 pergunta
+Poderá sair de jogo e ficar com a quantia ganha até ao momento antes de prosseguir para a próxima pergunta 
+Durante o jogo tem ao seu dispor 4 ajudas, sendo elas:
+      	50:50 – são eliminadas aleatoriamente duas respostas erradas, ficando apenas uma resposta errada e a resposta certa;
+      	Telefonar – o jogador tem ao seu dispor 30 segundos para falar com alguém à sua escolha que possa ou não saber a resposta;
+      	Ajuda do público – o auditório de 100 pessoas vota na resposta que pensam estar correta;
+      	Troca – o jogador tem a possibilidade de trocar a pergunta por outra do mesmo grau de dificuldade ( a partir da 6 pergunta).
+
+
+
