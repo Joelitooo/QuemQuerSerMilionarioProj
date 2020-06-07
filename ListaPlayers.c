@@ -155,7 +155,7 @@ void SavePlayersFile(ELEMENTO *iniLista){
     fclose(fin);
 
 }
-int NotworkingPlayers(ELEMENTO **iniList, ELEMENTO **fimList){
+int ReadToListPlayers(ELEMENTO **iniList, ELEMENTO **fimList){
 
 
     FILE *foq=NULL;
@@ -178,10 +178,10 @@ int NotworkingPlayers(ELEMENTO **iniList, ELEMENTO **fimList){
     fclose(foq);
 }
 
-int removePerson(ELEMENTO **iniListaPerguntaEscolhida, ELEMENTO **fimListaPerguntaEscolhida, char nome[]){
+int removePerson(ELEMENTO **iniLista, ELEMENTO **fimLista, char nome[]){
     ELEMENTO *aux=NULL;
 
-    aux=*iniListaPerguntaEscolhida;
+    aux=*iniLista;
     while(aux!=NULL && strcmp((aux->info.nome), nome)!=0){
         aux=aux->seguinte;
     }
@@ -190,19 +190,19 @@ int removePerson(ELEMENTO **iniListaPerguntaEscolhida, ELEMENTO **fimListaPergun
         return -1;
     }
     if(aux->anterior==NULL){
-        *iniListaPerguntaEscolhida=aux->seguinte;
-        if(*iniListaPerguntaEscolhida!=NULL){
-            (*iniListaPerguntaEscolhida)->anterior=NULL;
-            aux->seguinte->anterior=*iniListaPerguntaEscolhida;
+        *iniLista=aux->seguinte;
+        if(*iniLista != NULL){
+            (*iniLista)->anterior=NULL;
+            aux->seguinte->anterior=*iniLista;
         }
     }
     else{
         aux->anterior->seguinte=aux->seguinte;
     }
     if(aux->seguinte==NULL){
-        *fimListaPerguntaEscolhida=aux->anterior;
-        if(*fimListaPerguntaEscolhida!=NULL){
-            (*fimListaPerguntaEscolhida)->seguinte=NULL;
+        *fimLista=aux->anterior;
+        if(*fimLista != NULL){
+            (*fimLista)->seguinte=NULL;
         }
     }
     else{

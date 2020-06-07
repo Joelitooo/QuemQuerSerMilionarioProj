@@ -24,6 +24,7 @@ typedef struct user{
 
 typedef struct question{
 
+    int indice;
     char mainquestion[10000];
     char option1[10000];
     char option2[10000];
@@ -58,10 +59,11 @@ void criarJogador(ELEMENTO **iniLista, ELEMENTO **fimLista, JOGADOR info_aux);
 
 int MakeQuestion(ELEMENTOQ **iniList, ELEMENTOQ **endList, QUESTIONS aux_info);
 void SavePlayersFile(ELEMENTO *iniLista) ;
-int removePerson(ELEMENTO **iniListaPerguntaEscolhida, ELEMENTO **fimListaPerguntaEscolhida, char nome[]);
+int removePerson(ELEMENTO **iniLista, ELEMENTO **fimLista, char nome[]);
 void SaveQuestions(ELEMENTOQ *inilist);
-void NotoworkingQuestions(ELEMENTOQ **iniList, ELEMENTOQ **endList);
-int  NotworkingPlayers(ELEMENTO **iniList, ELEMENTO **fimList);
+void ReadToListQ(ELEMENTOQ **iniList, ELEMENTOQ **endList);
+int  ReadToListPlayers(ELEMENTO **iniList, ELEMENTO **fimList);
+void GetQuestionOut(ELEMENTOQ **iniList, ELEMENTOQ **fimList, int indice);
 
 int lerRegras();
 void printQuestion(ELEMENTOQ *iniList);

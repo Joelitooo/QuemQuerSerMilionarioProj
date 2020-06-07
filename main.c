@@ -8,8 +8,8 @@ int main() {
     ELEMENTOQ *iniList=NULL, *fimList=NULL;
     JOGADOR info_aux;
     QUESTIONS infoq_aux;
-    NotworkingPlayers(&iniLista, &fimLista);
-    NotoworkingQuestions(&iniList, &fimList);
+    ReadToListPlayers(&iniLista, &fimLista);
+    ReadToListQ(&iniList, &fimList);
     char Passwd[100] = "asd";
     char CorrectPasswd[100];
     int attempts=3;
@@ -17,6 +17,7 @@ int main() {
     int opc2=0;
     int res=0;
     int opc3=0;
+    int indice=0;
     char nameremove[100];
     srand(time(NULL));
 
@@ -42,6 +43,10 @@ int main() {
                                     break;
                                 case 2:
                                     printf("\nRemover pergunta");
+                                    printf("\nChose the indice of the question to remove:");
+                                    fflush(stdin);
+                                    scanf("%d", &infoq_aux.indice);
+                                    GetQuestionOut(iniList, fimList, indice);
                                     break;
                                 case 3:
                                     printf("\nAdicionar pergunta");

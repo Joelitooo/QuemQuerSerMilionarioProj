@@ -22,6 +22,8 @@ void LimpQ(ELEMENTOQ **inilista, ELEMENTOQ **fimlista){
 QUESTIONS dadosQ(){
 
     QUESTIONS aux;
+    printf("\nIndice da Questao:");
+    scanf("%i", &aux.indice);
     printf("\nQuestion:");
     scanf(" %100[^\n]s", aux.mainquestion);
     printf("\nOption1:");
@@ -170,7 +172,7 @@ ELEMENTOQ *ReadListIn(ELEMENTOQ *iniList, ELEMENTOQ *fimList){
 
 }
 
-void NotoworkingQuestions(ELEMENTOQ **iniList, ELEMENTOQ **endList){
+void ReadToListQ(ELEMENTOQ **iniList, ELEMENTOQ **endList){
 
     FILE *fy;
     QUESTIONS question;
@@ -204,8 +206,8 @@ void NotoworkingQuestions(ELEMENTOQ **iniList, ELEMENTOQ **endList){
 void printQuestion(ELEMENTOQ *iniList){
 
 
-    ELEMENTOQ *aux=NULL;
-/*
+//    ELEMENTOQ *aux=NULL;
+
     ELEMENTOQ *aux= iniList;
 
     int count = 0;
@@ -219,7 +221,8 @@ void printQuestion(ELEMENTOQ *iniList){
         ahead = aux->seguinte;
         behind = aux->anterior;
 
-        printf("\nQuestion: %s \nAnswer options: %s\n%s\n%s\n%s\nCorrect Option:%s\nDificulty:%i\n",
+        printf("\nIndice %d\nQuestion: %s \nAnswer options: %s\n%s\n%s\n%s\nCorrect Option:%s\nDificulty:%i\n",
+                aux->infoq.indice,
                 aux->infoq.mainquestion,
                 aux->infoq.option1,
                 aux->infoq.option2,
@@ -236,16 +239,60 @@ void printQuestion(ELEMENTOQ *iniList){
         behind = NULL;
     }
     printf("Total Questions:%d\n",count);
-*/
 
 
+/*
     for(aux=iniList;aux!=NULL;aux=aux->seguinte){
-        printf("\nQuestion: %s \nAnswer options: %s\n%s\n%s\n%s\nCorrect Option:%s\nDificulty:%i\n", aux->infoq.mainquestion, aux->infoq.option1, aux->infoq.option2,aux->infoq.option3, aux->infoq.option4, aux->infoq.correctoption,aux->infoq.dificulty);
+        printf("\nIndice: %i \nQuestion: %s \nAnswer options: %s\n%s\n%s\n%s\nCorrect Option:%s\nDificulty:%i\n",
+                aux->infoq.indice,
+                aux->infoq.mainquestion,
+                aux->infoq.option1,
+                aux->infoq.option2,
+                aux->infoq.option3,
+                aux->infoq.option4,
+                aux->infoq.correctoption,
+                aux->infoq.dificulty);
 
     }
-
+*/
 }
 
+
+
+void GetQuestionOut(ELEMENTOQ **iniList, ELEMENTOQ **fimList, int indice){
+
+    ELEMENTOQ *aux=NULL;
+
+    aux=(*iniList);
+    while(aux!=NULL && aux->infoq.indice!=indice){
+        aux=aux->seguinte;
+    }
+    if(aux==NULL){
+        printf("\nIndice not found");
+        return;
+    }
+    if (aux->anterior==NULL){
+        *iniList=aux->seguinte;
+        if (*iniList!=NULL){
+            (*iniList)->anterior=NULL;
+            aux->seguinte->anterior=*iniList;
+        }
+
+    } else {
+        aux->anterior->seguinte=aux->seguinte;
+    }
+    if(aux->seguinte==NULL){
+        *fimList=aux->anterior;
+        if(*fimList!=NULL){
+            (*fimList)->seguinte=NULL;
+        }
+    } else{
+        aux->seguinte->anterior=aux->anterior;
+    }
+
+    free(aux);
+
+}
 
 int getSizeListQ(ELEMENTOQ *iniList){
 

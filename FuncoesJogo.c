@@ -175,7 +175,7 @@ void InitGame(ELEMENTO *iniLista, ELEMENTOQ *iniListaQ) {
         }
     }
 }
-
+//                                                               FUI CAGAR
 GAMESTATUS FazerPergunta(ELEMENTOQ *pergunta, int ajudas[4], int ajuda) {
     char opcao[100], opContH[10], opcaoAjudas[10], opContJ[10];
     if(ajuda == 0) {
@@ -352,7 +352,7 @@ GAMESTATUS FazerPergunta(ELEMENTOQ *pergunta, int ajudas[4], int ajuda) {
         }
         printf("Correct Answer!\n");
         printf("\nDo you wish to continue playing?\n(Y/N)\n");
-        scanf(" %100[\n^]s", opContJ);
+        scanf(" %100[^\n]s", opContJ);
         if (strcmp(opContJ, "N")==0){
             return ENDED;
         }
