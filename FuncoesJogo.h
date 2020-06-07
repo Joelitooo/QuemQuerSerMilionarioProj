@@ -14,12 +14,13 @@
 #include <locale.h>
 #include <time.h>
 #include <unistd.h>
+#include <ctype.h>
 
 typedef struct user{
 
     char nome[100];
     int idade;
-    int scorei;
+    int highscore;
 
 }JOGADOR;
 

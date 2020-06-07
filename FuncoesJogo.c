@@ -22,7 +22,7 @@ int MainMenu(){
 int MainSubMenu() {
     int opc2 = 0;
     printf("\n------------------------------------------------------------------------------------------------------------\n");
-    printf("\n1-Play\n2-Watch Rules\n3-List the Best 10 Players\n4-Register a new Player\n5-Listar os jogadores existentes\n0-BACK\n");
+    printf("\n1-Play\n2-Watch Rules\n3-Register a new Player\n4-Listar os jogadores existentes\n0-BACK\n");
     printf("\n------------------------------------------------------------------------------------------------------------\n");
     scanf("%i", &opc2);
 
@@ -174,6 +174,15 @@ void InitGame(ELEMENTO *iniLista, ELEMENTOQ *iniListaQ) {
                 }
             }
         } else {
+            if (jogador->info.highscore==NULL) {
+                printf("\nYour highscore is %i", score);
+                jogador->info.highscore = score;
+            } else if (jogador->info.highscore<score){
+                printf("\nYour highscore is %i", score);
+                jogador->info.highscore=score;
+            } else{
+                printf("\nYour score was %i\nYour highscore stays the same: %i", score, jogador->info.highscore);
+            }
             break;
         }
     }
@@ -181,6 +190,7 @@ void InitGame(ELEMENTO *iniLista, ELEMENTOQ *iniListaQ) {
 
 GAMESTATUS FazerPergunta(ELEMENTOQ *pergunta, int ajudas[4], int ajuda) {
     char opcao[100], opContH[10], opcaoAjudas[10], opContJ[10];
+
     if(ajuda == 0) {
 
         printf("Question: %s\nPossible Answers:\nA- %s\nB- %s\nC- %s\nD- %s\n",

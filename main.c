@@ -39,6 +39,7 @@ int main() {
                             switch (opc3) {
                                 case 1:
                                     printf("\nListar todas as perguntas e resposta\n");
+                                    ReadListIn(iniList, fimList);
                                     printQuestion(iniList);
                                     break;
                                 case 2:
@@ -49,9 +50,8 @@ int main() {
                                 case 3:
                                     printf("\nRemover pergunta");
                                     printf("\nChose the indice of the question to remove:");
-                                    fflush(stdin);
-                                    scanf("%d", &infoq_aux.indice);
-                                    GetQuestionOut(iniList, fimList, indice);
+                                    scanf("%i", &indice);
+                                    GetQuestionOut(&iniList, &fimList, indice);
                                     break;
                                 case 4:
                                     printf("\n----------------------LISTING ALL THE PLAYERS----------------------------\n");
@@ -90,14 +90,11 @@ int main() {
                             lerRegras();
                             break;
                         case 3:
-                            printf("\n----------------------REGISTING THE BEST 10 PLAYERS-----------------------\n");
-                            break;
-                        case 4:
                             printf("\n----------------------REGISTING A NEW PLAYER-----------------------------\n");
                             info_aux=dados();
                             criarJogador(&iniLista,&fimLista,info_aux);
                             break;
-                        case 5:
+                        case 4:
                             printf("\n----------------------LISTING ALL THE PLAYERS----------------------------\n");
                             ReadListInP(iniLista,fimLista);
                             ListPlayers(iniLista);
