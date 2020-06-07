@@ -101,7 +101,7 @@ ELEMENTO *ReadListInP(ELEMENTO *iniLista, ELEMENTO *fimLista) {
         }
 
     } else{
-        printf("\nERRORRRRR");
+        printf("\nThe file does not exist\n");
     }
 
 }
@@ -174,7 +174,6 @@ int ReadToListPlayers(ELEMENTO **iniList, ELEMENTO **fimList){
         }
 
     }
-
     fclose(foq);
 }
 
@@ -212,12 +211,16 @@ int removePerson(ELEMENTO **iniLista, ELEMENTO **fimLista, char nome[]){
     return 0;
 }
 
+int getSizeListP(ELEMENTO *iniLista){
 
+    if (iniLista==NULL){ return 0;}
+    return (1+getSizeListP(iniLista->seguinte));
+}
 
-
-
-
-
+void showSizeP(ELEMENTO *iniLista) {
+    size_t listSizep = getSizeListP(iniLista);
+    printf("\nThe size of the double linked list is: %i", listSizep);
+}
 
 
 

@@ -9,7 +9,7 @@
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++MENUS++++++++++++++++++++++++++++++++++++++++++++++++++++
 int MainMenu(){
     int opc=0;
-    printf("\nAre you the ADMIN or a USER");
+    printf("\n------------------Are you the ADMIN or a USER----------------------\n");
     printf("\nADMIN - 1");
     printf("\nUSER - 2");
     printf("\nEXIT-0\n");
@@ -21,9 +21,9 @@ int MainMenu(){
 
 int MainSubMenu() {
     int opc2 = 0;
-
-
-    printf("\nPlay-1\nWatch Rules-112\nList the Best 10 Players-2\nRegister a new Player-4\nListar os jogadores existentes-5\nBack-0\n");
+    printf("\n------------------------------------------------------------------------------------------------------------\n");
+    printf("\n1-Play\n2-Watch Rules\n3-List the Best 10 Players\n4-Register a new Player\n5-Listar os jogadores existentes\n0-BACK\n");
+    printf("\n------------------------------------------------------------------------------------------------------------\n");
     scanf("%i", &opc2);
 
     return opc2;
@@ -35,11 +35,12 @@ int AdminMenu(){
     printf("\n-------------------------------------------");
     printf("\n------YOU ARE ACESSING ADMIN RIGHTS--------\n");
     printf("\n1-Listar as perguntas e respostas");
-    printf("\n2-Remover uma pergunta");
-    printf("\n3-Adicionar uma pergunta");
-    printf("\n4-Reset no historico");
+    printf("\n2-Adicionar uma pergunta");
+    printf("\n3-Remover uma pergunta");
+    printf("\n4-Listar Jogadores");
     printf("\n5-Remover Jogador");
-    printf("\n6-Ver tamanho da Lista");
+    printf("\n6-Ver tamanho da Lista de perguntas");
+    printf("\n7-Ver tamanho da Lista de jogadores");
     printf("\n0 - SAIR");
     printf("\n--------------------------------------------\n");
     scanf("%i", &opc3);
@@ -61,7 +62,7 @@ int lerRegras(){
 
     FILE *fout=fopen ("rules.txt", "r");
     if(fout==NULL){
-        printf("\nOut of memory");
+        printf("\nOut of memory\n");
         return -1;
     }
      char output[256];
@@ -142,7 +143,9 @@ void InitGame(ELEMENTO *iniLista, ELEMENTOQ *iniListaQ) {
     printf("Welcome %s\n", jogador->info.nome);
     while(1) {
         ELEMENTOQ *pergunta = ObterPergunta(iniListaQ, escala);
+        printf("\n----------------------------------------------------------------------------------\n");
         printf("Score: %i\tMoney: %i\n", score, escalaDinheiro[escala][iEscala]);
+        printf("\n----------------------------------------------------------------------------------\n");
         GAMESTATUS gameStatus = FazerPergunta(pergunta, ajudas, 0);
         if(gameStatus == AJUDA1) {
             gameStatus = FazerPergunta(pergunta, ajudas, 1);
@@ -175,7 +178,7 @@ void InitGame(ELEMENTO *iniLista, ELEMENTOQ *iniListaQ) {
         }
     }
 }
-//                                                               FUI CAGAR
+
 GAMESTATUS FazerPergunta(ELEMENTOQ *pergunta, int ajudas[4], int ajuda) {
     char opcao[100], opContH[10], opcaoAjudas[10], opContJ[10];
     if(ajuda == 0) {
@@ -360,6 +363,9 @@ GAMESTATUS FazerPergunta(ELEMENTOQ *pergunta, int ajudas[4], int ajuda) {
 
     } else {
         printf("Incorrect Answer! Get sad :(");
+        printf("\nThe correct answer was: %s \n", pergunta->infoq.correctoption);
+        printf("\n_______________________________________________________________\n");
+
         return ENDED;
     }
 

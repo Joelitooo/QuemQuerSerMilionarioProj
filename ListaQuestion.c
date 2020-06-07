@@ -152,7 +152,6 @@ ELEMENTOQ *ReadListIn(ELEMENTOQ *iniList, ELEMENTOQ *fimList){
 
     if (foq!=NULL){
 
-        //LimpQ(iniList, fimList);
         iniList=NULL;
         fseek(foq, 0 ,SEEK_END);
         long filesize = ftell(foq);
@@ -194,7 +193,7 @@ void ReadToListQ(ELEMENTOQ **iniList, ELEMENTOQ **endList){
         }
 
     } else{
-        printf("\nyou got gotted");
+        printf("\nFILE DOES NOT EXIST YET");
     }
 
 
@@ -205,8 +204,6 @@ void ReadToListQ(ELEMENTOQ **iniList, ELEMENTOQ **endList){
 
 void printQuestion(ELEMENTOQ *iniList){
 
-
-//    ELEMENTOQ *aux=NULL;
 
     ELEMENTOQ *aux= iniList;
 

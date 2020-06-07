@@ -19,6 +19,7 @@ typedef struct user{
 
     char nome[100];
     int idade;
+    int scorei;
 
 }JOGADOR;
 
@@ -72,6 +73,8 @@ void LimpQ(ELEMENTOQ **inilista, ELEMENTOQ **fimlista);
 void ListPlayers(ELEMENTO *iniLista);
 int getSizeListQ(ELEMENTOQ *iniList);
 void showSizeQ(ELEMENTOQ *iniList);
+int getSizeListP(ELEMENTO *iniLista);
+void showSizeP(ELEMENTO *iniLista);
 ELEMENTOQ *ReadListIn(ELEMENTOQ *iniList, ELEMENTOQ *fimList);
 ELEMENTOQ *ObterPergunta(ELEMENTOQ *iniListaQ, int escala);
 ELEMENTO  *ReadListInP(ELEMENTO *iniLista, ELEMENTO *fimLista);

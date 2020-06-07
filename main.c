@@ -38,23 +38,25 @@ int main() {
                             opc3 = AdminMenu();
                             switch (opc3) {
                                 case 1:
-                                    printf("\nListar todas as perguntas e resposta");
+                                    printf("\nListar todas as perguntas e resposta\n");
                                     printQuestion(iniList);
                                     break;
                                 case 2:
+                                    printf("\nAdicionar pergunta");
+                                    infoq_aux=dadosQ();
+                                    MakeQuestion(&iniList,&fimList, infoq_aux);
+                                    break;
+                                case 3:
                                     printf("\nRemover pergunta");
                                     printf("\nChose the indice of the question to remove:");
                                     fflush(stdin);
                                     scanf("%d", &infoq_aux.indice);
                                     GetQuestionOut(iniList, fimList, indice);
                                     break;
-                                case 3:
-                                    printf("\nAdicionar pergunta");
-                                    infoq_aux=dadosQ();
-                                    MakeQuestion(&iniList,&fimList, infoq_aux);
-                                    break;
                                 case 4:
-                                    printf("\nRemover historico");
+                                    printf("\n----------------------LISTING ALL THE PLAYERS----------------------------\n");
+                                    ReadListInP(iniLista,fimLista);
+                                    ListPlayers(iniLista);
                                     break;
                                 case 5:
                                     printf("\nChose the name to remove:");
@@ -62,8 +64,11 @@ int main() {
                                     scanf(" %100[^\n]s", nameremove);
                                     removePerson(&iniLista,&fimLista, nameremove);
                                     break;
-                                    case 6:
-                                        showSizeQ(iniList);
+                                case 6:
+                                    showSizeQ(iniList);
+                                    break;
+                                case 7:
+                                    showSizeP(iniLista);
                                 case 0:
                                     break;
 
@@ -77,42 +82,41 @@ int main() {
                     opc2 = MainSubMenu();
                     switch(opc2){
                         case 1:
-                            printf("\nUr going to play now.\n");
+                            printf("\n---------------------YOU ARE GOING TO PLAY NOW---------------------------\n");
                             InitGame(iniLista, iniList);
                             break;
-                        case 112:
-                            printf("\nUr going to watch the rules\n");
+                        case 2:
+                            printf("\n----------------------RULES----------------------------------------------\n");
                             lerRegras();
                             break;
                         case 3:
-                            printf("\nUr going to watch the best 10 players");
+                            printf("\n----------------------REGISTING THE BEST 10 PLAYERS-----------------------\n");
                             break;
                         case 4:
-                            printf("\nUr going to regist a new player");
+                            printf("\n----------------------REGISTING A NEW PLAYER-----------------------------\n");
                             info_aux=dados();
-                            printf("\nI am here");
                             criarJogador(&iniLista,&fimLista,info_aux);
                             break;
                         case 5:
-                            printf("\nListagem de todos os jogadores registados\n");
+                            printf("\n----------------------LISTING ALL THE PLAYERS----------------------------\n");
                             ReadListInP(iniLista,fimLista);
                             ListPlayers(iniLista);
-                            printf("\nI am here");
                             break;
                         case 0:
                             break;
                     }
                 }while(opc2!=0);
                 break;
-            case 0: printf("\nVolte sempre\n");
+            case 0: printf("\nComeback always!\n");
                 printf("\n");
                 SavePlayersFile(iniLista);
+                printf("\n");
                 SaveQuestions(iniList);
                 printf("\n");
                 LimpP(&iniLista, &fimLista);
                 LimpQ(&iniList, &fimList);
                 break;
-            default:printf("\nPor favor escolha uma opção válida");
+            default:printf("\nPlease choose a valid option");
 
         }
 
